@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import VideoCard from "../components/VideoCard";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom"; // for navigation to Upload page
-import page from "../pages/UploadVideo.jsx";// for uploading videos 
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
