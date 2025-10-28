@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "../components/VideoCard";
 import Navbar from "../components/Navbar";
-import supabase from "../supabase"; // your frontend supabase client
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -11,13 +10,10 @@ const Home = () => {
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        const { data, error } = await supabase
-          .from("videos")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-        setVideos(data || []);
+        const res = await fetch("/.netlify/functions/supabase?path=videos&method=GET");
+        if (!res.ok) throw new Error("Failed to fetch videos");
+        const data = await res.json();
+        setVideos(data.videos || []);
       } catch (err) {
         console.error(err);
         setError("Could not load videos");
@@ -25,6 +21,7 @@ const Home = () => {
         setLoading(false);
       }
     };
+
     loadVideos();
   }, []);
 
