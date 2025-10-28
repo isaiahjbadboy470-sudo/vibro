@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import VideoCard from "../components/VideoCard";
 import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom"; // for navigation to Upload page
+import page from "../pages/UploadVideo.jsx";// for uploading videos 
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -33,10 +35,17 @@ const Home = () => {
       <Navbar />
       <div style={{ flex: 1, padding: "1rem" }}>
         <h1>Vibro Home</h1>
-        {videos.length === 0 && <p>No videos found.</p>}
-        {videos.map((video) => (
-          <VideoCard key={video.id} video={video} />
-        ))}
+        {/* Link to the real Upload.jsx page */}
+        <Link to="/upload">
+          <button style={{ marginBottom: "1rem" }}>Upload New Video</button>
+        </Link>
+
+        {/* Display videos */}
+        {videos.length === 0 ? (
+          <p>No videos found. Be the first to upload one!</p>
+        ) : (
+          videos.map((video) => <VideoCard key={video.id} video={video} />)
+        )}
       </div>
     </div>
   );
